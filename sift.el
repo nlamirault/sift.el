@@ -38,6 +38,8 @@
 ;;; Code:
 
 (require 'compile)
+(require 'thingatpt)
+
 
 
 ;; Customization

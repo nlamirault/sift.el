@@ -25,7 +25,7 @@ try to follow these guidelines when you do so.
   must be `develop` branch.
 
 
-[1]: https://github.com/nlamirault/gotest.el/issues
+[1]: https://github.com/nlamirault/sift.el/issues
 [2]: http://gun.io/blog/how-to-github-fork-branch-and-pull-request
 [3]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [4]: https://help.github.com/articles/using-pull-requests

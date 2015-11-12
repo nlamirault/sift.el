@@ -40,6 +40,8 @@
 ;;; Code:
 
 
+(require 'projectile)
+
 ;;;###autoload
 (defun projectile-sift (regexp)
   "Run a sift search with `REGEXP' rooted at the current projectile project root."

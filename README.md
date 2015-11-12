@@ -1,4 +1,4 @@
-# gotest.el
+# sift.el
 
 [![License GPL 2][badge-license]][LICENSE]
 [![Coverage Status](https://coveralls.io/repos/nlamirault/sift.el/badge.png?branch=master)](https://coveralls.io/r/nlamirault/sift.el?branch=master)

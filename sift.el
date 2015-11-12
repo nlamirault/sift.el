@@ -41,7 +41,6 @@
 (require 'thingatpt)
 
 
-
 ;; Customization
 ;; --------------------------
 
@@ -153,7 +152,8 @@ This function is called from `compilation-filter-hook'."
 
 ;;;###autoload
 (defun sift-regexp (regexp directory &optional args)
-  "Run a sift search with REGEXP rooted at DIRECTORY."
+  "Run a sift search with `REGEXP' rooted at `DIRECTORY'.
+`ARGS' provides Sift command line arguments."
   (interactive
    (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol))
          (read-directory-name "Directory: ")))
@@ -163,9 +163,11 @@ This function is called from `compilation-filter-hook'."
                 (append (list sift-executable)
                         sift-arguments
                         args
-                        '("--color" "-n")
+                        '("--color" "-n" "--stats")
                         (list (shell-quote-argument regexp) ".")) " ")
      'sift-search-mode)))
+
+
 
 
 (provide 'sift)

@@ -110,12 +110,11 @@ This requires the sift command to support --color-match, which is only in v0.14+
   "Platinum searcher results compilation mode"
   (set (make-local-variable 'truncate-lines) t)
   (set (make-local-variable 'compilation-disable-input) t)
-  (set (make-local-variable 'tool-bar-map) grep-mode-tool-bar-map)
   (let ((symbol 'compilation-sift)
         (pattern '("^\\([^:\n]+?\\):\\([0-9]+\\):[^0-9]" 1 2)))
     (set (make-local-variable 'compilation-error-regexp-alist) (list symbol))
     (set (make-local-variable 'compilation-error-regexp-alist-alist) (list (cons symbol pattern))))
-  (set (make-local-variable 'compilation-error-face) grep-hit-face)
+  (set (make-local-variable 'compilation-error-face) 'sift-hit-face)
   (add-hook 'compilation-filter-hook 'sift-filter nil t))
 
 

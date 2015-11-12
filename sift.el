@@ -38,7 +38,7 @@
 ;;; Code:
 
 (require 'compile)
-
+(require 'grep)
 
 ;; Customization
 ;; --------------------------

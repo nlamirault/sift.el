@@ -38,6 +38,7 @@
 ;;; Code:
 
 (require 'compile)
+(require 'grep)
 (require 'thingatpt)
 
 
@@ -111,6 +112,7 @@ This requires the sift command to support --color-match, which is only in v0.14+
   "Platinum searcher results compilation mode"
   (set (make-local-variable 'truncate-lines) t)
   (set (make-local-variable 'compilation-disable-input) t)
+  (set (make-local-variable 'tool-bar-map) grep-mode-tool-bar-map)
   (let ((symbol 'compilation-sift)
         (pattern '("^\\([^:\n]+?\\):\\([0-9]+\\):[^0-9]" 1 2)))
     (set (make-local-variable 'compilation-error-regexp-alist) (list symbol))

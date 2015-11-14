@@ -1,4 +1,4 @@
-;;; sift.el --- A front-end for sift, a fast and powerful open source alternative to grep
+;;; sift.el --- Front-end for sift, a fast and powerful grep alternative
 
 ;; Copyright (C) 2015 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 ;;

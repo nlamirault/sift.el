@@ -11,7 +11,7 @@ Develop:
 * [![Melpa Status](https://melpa.org/packages/sift-badge.svg)](https://melpa.org/#/sift)
 * [![Circle CI](https://circleci.com/gh/nlamirault/sift.el/tree/develop.svg?style=svg)](https://circleci.com/gh/nlamirault/sift.el/tree/develop)
 
-An Emacs front-end for [sift][]
+``sift.el`` allows you to search using [sift][] from inside Emacs.
 
 ## Installation
 

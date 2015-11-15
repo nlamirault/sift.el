@@ -11,7 +11,7 @@ Develop:
 * [![Melpa Status](https://melpa.org/packages/sift-badge.svg)](https://melpa.org/#/sift)
 * [![Circle CI](https://circleci.com/gh/nlamirault/sift.el/tree/develop.svg?style=svg)](https://circleci.com/gh/nlamirault/sift.el/tree/develop)
 
-Run [Go](http://golang.org) tests and programs from Emacs (>= 24.3)
+An Emacs front-end for [sift][]
 
 ## Installation
 
@@ -87,7 +87,7 @@ See [LICENSE](LICENSE).
 
 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 
-[sift]: https://github.com/nlamirault/sift.el
+[sift.el]: https://github.com/nlamirault/sift.el
 [badge-license]: https://img.shields.io/badge/license-GPL_2-green.svg?style=flat
 [LICENSE]: https://github.com/nlamirault/sift.el/blob/master/LICENSE
 
@@ -97,3 +97,6 @@ Nicolas Lamirault <nicolas.lamirault@gmail.com>
 [Issue tracker]: https://github.com/nlamirault/sift.el/issues
 
 [overseer]: https://github.com/tonini/overseer.el
+
+[sift]: https://sift-tool.org/
+

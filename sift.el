@@ -99,6 +99,8 @@ This requires the sift command to support --color-match, which is only in v0.14+
     (set-keymap-parent map compilation-minor-mode-map)
     (define-key map "p" 'compilation-previous-error)
     (define-key map "n" 'compilation-next-error)
+    (define-key map "{" 'compilation-previous-file)
+    (define-key map "}" 'compilation-next-file)
     (define-key map "k" '(lambda ()
                            (interactive)
                            (let ((kill-buffer-query-functions))
@@ -168,8 +170,6 @@ This function is called from `compilation-filter-hook'."
                         '("--color" "-n" "--stats")
                         (list (shell-quote-argument regexp) ".")) " ")
      'sift-search-mode)))
-
-
 
 
 (provide 'sift)

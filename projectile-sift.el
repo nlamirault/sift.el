@@ -1,4 +1,4 @@
-;; sift.el --- Run a sift with Projectile
+;;; projectile-sift.el --- Run a sift with Projectile
 
 ;; Copyright (C) 2015 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 ;;

@@ -38,6 +38,8 @@
 ;;; Code:
 
 (require 'compile)
+(require 'grep)
+(require 'thingatpt)
 
 
 ;; Customization
@@ -97,6 +99,8 @@ This requires the sift command to support --color-match, which is only in v0.14+
     (set-keymap-parent map compilation-minor-mode-map)
     (define-key map "p" 'compilation-previous-error)
     (define-key map "n" 'compilation-next-error)
+    (define-key map "{" 'compilation-previous-file)
+    (define-key map "}" 'compilation-next-file)
     (define-key map "k" '(lambda ()
                            (interactive)
                            (let ((kill-buffer-query-functions))
@@ -110,6 +114,7 @@ This requires the sift command to support --color-match, which is only in v0.14+
   "Platinum searcher results compilation mode"
   (set (make-local-variable 'truncate-lines) t)
   (set (make-local-variable 'compilation-disable-input) t)
+  (set (make-local-variable 'tool-bar-map) grep-mode-tool-bar-map)
   (let ((symbol 'compilation-sift)
         (pattern '("^\\([^:\n]+?\\):\\([0-9]+\\):[^0-9]" 1 2)))
     (set (make-local-variable 'compilation-error-regexp-alist) (list symbol))
@@ -151,7 +156,8 @@ This function is called from `compilation-filter-hook'."
 
 ;;;###autoload
 (defun sift-regexp (regexp directory &optional args)
-  "Run a sift search with REGEXP rooted at DIRECTORY."
+  "Run a sift search with `REGEXP' rooted at `DIRECTORY'.
+`ARGS' provides Sift command line arguments."
   (interactive
    (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol))
          (read-directory-name "Directory: ")))
@@ -161,7 +167,7 @@ This function is called from `compilation-filter-hook'."
                 (append (list sift-executable)
                         sift-arguments
                         args
-                        '("--color" "-n")
+                        '("--color" "-n" "--stats")
                         (list (shell-quote-argument regexp) ".")) " ")
      'sift-search-mode)))
 

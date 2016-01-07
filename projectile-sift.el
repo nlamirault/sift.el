@@ -3,11 +3,11 @@
 ;; Copyright (C) 2015 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 ;;
 ;; Author: Nicolas Lamirault <nicolas.lamirault@gmail.com>
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; Keywords : sift projectile
 ;; Homepage: https://github.com/nlamirault/sift.el
 
-;; Package-Requires: ((projectile "0.10.0"))
+;; Package-Requires: ((sift "0.2.0") (projectile "0.13.0"))
 
 ;;; Commentary:
 
@@ -38,6 +38,10 @@
 ;; M-x projectile-sift
 
 ;;; Code:
+
+
+(require 'projectile)
+(require 'sift)
 
 
 ;;;###autoload

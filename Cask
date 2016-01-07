@@ -10,6 +10,7 @@
  (depends-on "f")
  (depends-on "s")
  (depends-on "pkg-info")
+ (depends-on "projectile")
  (depends-on "ert")
  (depends-on "ert-runner")
  (depends-on "undercover"))

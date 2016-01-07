@@ -1,5 +1,9 @@
 # sift.el ChangeLog
 
+# Version 0.2.0 (01/07/2016)
+
+- Setup Sift search using projectile.
+- ``FIX`` CircleCI build
 
 # Version 0.1.0 (11/12/2015)
 

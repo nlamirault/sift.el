@@ -29,7 +29,7 @@
   :expected-result (if (executable-find "cask") :passed :failed)
   (let* ((cask-version (car (process-lines "cask" "version"))))
     (message "sift.el Cask version: %s" cask-version)
-    (should (string= "0.2.0" cask-version))))
+    (should (string= "0.3.0" cask-version))))
 
 
 (provide 'sift-version-test)

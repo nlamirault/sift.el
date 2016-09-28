@@ -46,6 +46,12 @@
 ;; --------------------------
 
 
+(defgroup sift nil
+  "Sift"
+  :group 'tools
+  :group 'matching)
+
+
 (defcustom sift-executable
   "sift"
   "Name of the sift executable to use."

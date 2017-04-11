@@ -89,5 +89,4 @@
          ;; (error
          ;;  (message (ansi-red "[sift] Error during unit tests : %s" ex))))))
 
-(provide 'test-helper)
 ;;; test-helper.el ends here

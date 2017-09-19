@@ -22,8 +22,6 @@
 ;;; Code:
 
 
-(require 'test-helper)
-
 (ert-deftest phpunit-mode-library-version ()
   :tags '(version)
   :expected-result (if (executable-find "cask") :passed :failed)

@@ -167,7 +167,7 @@ This function is called from `compilation-filter-hook'."
                 (append (list sift-executable)
                         sift-arguments
                         args
-                        '("--color" "-n" "--stats")
+                        '("--color" "-n" "--stats" "--")
                         (list (shell-quote-argument regexp) ".")) " ")
      'sift-search-mode)))
 

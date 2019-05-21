@@ -153,13 +153,14 @@ This function is called from `compilation-filter-hook'."
 ;; API
 ;; --------------------------
 
+(defvar sift-history nil "History list for sift-regexp.")
 
 ;;;###autoload
 (defun sift-regexp (regexp directory &optional args)
   "Run a sift search with `REGEXP' rooted at `DIRECTORY'.
 `ARGS' provides Sift command line arguments."
   (interactive
-   (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol))
+   (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol) nil nil 'sift-regexp)
          (read-directory-name "Directory: ")))
   (let ((default-directory directory))
     (compilation-start

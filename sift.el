@@ -61,8 +61,7 @@
 
 
 (defcustom sift-highlight-search t
-  "Non-nil means we highlight the current search term in results.
-This requires the sift command to support --color-match, which is only in v0.14+"
+  "Non-nil means we highlight the current search term in results."
   :type 'boolean
   :group 'sift)
 
@@ -125,7 +124,7 @@ This requires the sift command to support --color-match, which is only in v0.14+
 
 ;; Taken from grep-filter, just changed the color regex.
 (defun sift-filter ()
-  "Handle match highlighting escape sequences inserted by the ag process.
+  "Handle match highlighting escape sequences inserted by the sift process.
 This function is called from `compilation-filter-hook'."
   (when sift-highlight-search
     (save-excursion
@@ -138,8 +137,8 @@ This function is called from `compilation-filter-hook'."
         ;; escape sequence in one chunk and the rest in another.
         (when (< (point) end)
           (setq end (copy-marker end))
-          ;; Highlight ag matches and delete marking sequences.
-          (while (re-search-forward "\033\\[30;43m\\(.*?\\)\033\\[[0-9]*m" end 1)
+          ;; Highlight sift matches and delete marking sequences.
+          (while (re-search-forward "\033\\[1;31;49m\\(.*?\\)\033\\[[0-9;]*m" end 1)
             (replace-match (propertize (match-string 1)
                                        'face nil 'font-lock-face 'sift-match-face)
                            t t))

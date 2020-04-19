@@ -159,7 +159,7 @@ This function is called from `compilation-filter-hook'."
   "Run a sift search with `REGEXP' rooted at `DIRECTORY'.
 `ARGS' provides Sift command line arguments."
   (interactive
-   (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol) nil nil 'sift-regexp)
+   (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol) nil nil 'sift-history)
          (read-directory-name "Directory: ")))
   (let ((default-directory directory))
     (compilation-start

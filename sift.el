@@ -157,10 +157,12 @@ This function is called from `compilation-filter-hook'."
 ;;;###autoload
 (defun sift-regexp (regexp directory &optional args)
   "Run a sift search with `REGEXP' rooted at `DIRECTORY'.
-`ARGS' provides Sift command line arguments."
+`ARGS' provides Sift command line arguments. With prefix
+argument, prompt for command line arguments."
   (interactive
    (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol) nil nil 'sift-history)
-         (read-directory-name "Directory: ")))
+         (read-directory-name "Base directory: ")))
+  (when current-prefix-arg (setq args (split-string (read-from-minibuffer "Extra arguments: "))))
   (let ((default-directory directory))
     (compilation-start
      (mapconcat 'identity

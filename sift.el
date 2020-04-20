@@ -169,7 +169,7 @@ argument, prompt for command line arguments."
                 (append (list sift-executable)
                         sift-arguments
                         args
-                        '("--color" "-n" "--stats" "--")
+                        '("--color" "--line-number" "--")
                         (list (shell-quote-argument regexp) ".")) " ")
      'sift-search-mode)))
 

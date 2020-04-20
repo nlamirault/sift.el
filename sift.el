@@ -109,15 +109,35 @@
 `compilation-minor-mode-map' is a cdr of this.")
 
 
+(defvar sift-search-mode-font-lock-keywords
+   '(;; Command output lines.
+     (": \\(.+\\): \\(?:Permission denied\\|No such \\(?:file or directory\\|device or address\\)\\)$"
+      1 grep-error-face)
+     ;; remove match from grep-regexp-alist before fontifying
+     ("^Sift[/a-zA-z]* started.*"
+      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t))
+     ("^Sift[/a-zA-z]* finished with \\(?:\\(\\(?:[0-9]+ \\)?matches found\\)\\|\\(no matches found\\)\\).*"
+      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t)
+      (1 compilation-info-face nil t)
+      (2 compilation-warning-face nil t))
+     ("^Sift[/a-zA-z]* \\(exited abnormally\\|interrupt\\|killed\\|terminated\\)\\(?:.*with code \\([0-9]+\\)\\)?.*"
+      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t)
+      (1 grep-error-face)
+      (2 grep-error-face nil t))
+     ;; "filename-linenumber-" format is used for context lines in GNU grep,
+     ;; "filename=linenumber=" for lines with function names in "git grep -p".
+     ("^.+?\\([-=\0]\\)[0-9]+\\([-=]\\).*\n" (0 grep-context-face)
+      (1 (if (eq (char-after (match-beginning 1)) ?\0)
+             `(face nil display ,(match-string 2))))))
+   "Additional things to highlight in sift output.
+This gets tacked on the end of the generated expressions.")
+
 (define-compilation-mode sift-search-mode "Sift"
   "Platinum searcher results compilation mode"
   (set (make-local-variable 'truncate-lines) t)
   (set (make-local-variable 'compilation-disable-input) t)
   (set (make-local-variable 'tool-bar-map) grep-mode-tool-bar-map)
-  (let ((symbol 'compilation-sift)
-        (pattern '("^\\([^:\n]+?\\):\\([0-9]+\\):[^0-9]" 1 2)))
-    (set (make-local-variable 'compilation-error-regexp-alist) (list symbol))
-    (set (make-local-variable 'compilation-error-regexp-alist-alist) (list (cons symbol pattern))))
+  (set (make-local-variable 'compilation-error-regexp-alist) grep-regexp-alist)
   (set (make-local-variable 'compilation-error-face) 'sift-hit-face)
   (add-hook 'compilation-filter-hook 'sift-filter nil t))
 

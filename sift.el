@@ -61,8 +61,7 @@
 
 
 (defcustom sift-highlight-search t
-  "Non-nil means we highlight the current search term in results.
-This requires the sift command to support --color-match, which is only in v0.14+"
+  "Non-nil means we highlight the current search term in results."
   :type 'boolean
   :group 'sift)
 
@@ -110,22 +109,42 @@ This requires the sift command to support --color-match, which is only in v0.14+
 `compilation-minor-mode-map' is a cdr of this.")
 
 
+(defvar sift-search-mode-font-lock-keywords
+   '(;; Command output lines.
+     (": \\(.+\\): \\(?:Permission denied\\|No such \\(?:file or directory\\|device or address\\)\\)$"
+      1 grep-error-face)
+     ;; remove match from grep-regexp-alist before fontifying
+     ("^Sift[/a-zA-z]* started.*"
+      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t))
+     ("^Sift[/a-zA-z]* finished with \\(?:\\(\\(?:[0-9]+ \\)?matches found\\)\\|\\(no matches found\\)\\).*"
+      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t)
+      (1 compilation-info-face nil t)
+      (2 compilation-warning-face nil t))
+     ("^Sift[/a-zA-z]* \\(exited abnormally\\|interrupt\\|killed\\|terminated\\)\\(?:.*with code \\([0-9]+\\)\\)?.*"
+      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t)
+      (1 grep-error-face)
+      (2 grep-error-face nil t))
+     ;; "filename-linenumber-" format is used for context lines in GNU grep,
+     ;; "filename=linenumber=" for lines with function names in "git grep -p".
+     ("^.+?\\([-=\0]\\)[0-9]+\\([-=]\\).*\n" (0 grep-context-face)
+      (1 (if (eq (char-after (match-beginning 1)) ?\0)
+             `(face nil display ,(match-string 2))))))
+   "Additional things to highlight in sift output.
+This gets tacked on the end of the generated expressions.")
+
 (define-compilation-mode sift-search-mode "Sift"
   "Platinum searcher results compilation mode"
   (set (make-local-variable 'truncate-lines) t)
   (set (make-local-variable 'compilation-disable-input) t)
   (set (make-local-variable 'tool-bar-map) grep-mode-tool-bar-map)
-  (let ((symbol 'compilation-sift)
-        (pattern '("^\\([^:\n]+?\\):\\([0-9]+\\):[^0-9]" 1 2)))
-    (set (make-local-variable 'compilation-error-regexp-alist) (list symbol))
-    (set (make-local-variable 'compilation-error-regexp-alist-alist) (list (cons symbol pattern))))
+  (set (make-local-variable 'compilation-error-regexp-alist) grep-regexp-alist)
   (set (make-local-variable 'compilation-error-face) 'sift-hit-face)
   (add-hook 'compilation-filter-hook 'sift-filter nil t))
 
 
 ;; Taken from grep-filter, just changed the color regex.
 (defun sift-filter ()
-  "Handle match highlighting escape sequences inserted by the ag process.
+  "Handle match highlighting escape sequences inserted by the sift process.
 This function is called from `compilation-filter-hook'."
   (when sift-highlight-search
     (save-excursion
@@ -138,8 +157,8 @@ This function is called from `compilation-filter-hook'."
         ;; escape sequence in one chunk and the rest in another.
         (when (< (point) end)
           (setq end (copy-marker end))
-          ;; Highlight ag matches and delete marking sequences.
-          (while (re-search-forward "\033\\[30;43m\\(.*?\\)\033\\[[0-9]*m" end 1)
+          ;; Highlight sift matches and delete marking sequences.
+          (while (re-search-forward "\033\\[1;31;49m\\(.*?\\)\033\\[[0-9;]*m" end 1)
             (replace-match (propertize (match-string 1)
                                        'face nil 'font-lock-face 'sift-match-face)
                            t t))
@@ -158,17 +177,19 @@ This function is called from `compilation-filter-hook'."
 ;;;###autoload
 (defun sift-regexp (regexp directory &optional args)
   "Run a sift search with `REGEXP' rooted at `DIRECTORY'.
-`ARGS' provides Sift command line arguments."
+`ARGS' provides Sift command line arguments. With prefix
+argument, prompt for command line arguments."
   (interactive
-   (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol) nil nil 'sift-regexp)
-         (read-directory-name "Directory: ")))
+   (list (read-from-minibuffer "Sift search for: " (thing-at-point 'symbol) nil nil 'sift-history)
+         (read-directory-name "Base directory: ")))
+  (when current-prefix-arg (setq args (split-string (read-from-minibuffer "Extra arguments: "))))
   (let ((default-directory directory))
     (compilation-start
      (mapconcat 'identity
                 (append (list sift-executable)
                         sift-arguments
                         args
-                        '("--color" "-n" "--stats" "--")
+                        '("--color" "--line-number" "--")
                         (list (shell-quote-argument regexp) ".")) " ")
      'sift-search-mode)))
 

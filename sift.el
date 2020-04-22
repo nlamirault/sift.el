@@ -116,10 +116,8 @@
      ;; remove match from grep-regexp-alist before fontifying
      ("^Sift[/a-zA-z]* started.*"
       (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t))
-     ("^Sift[/a-zA-z]* finished with \\(?:\\(\\(?:[0-9]+ \\)?matches found\\)\\|\\(no matches found\\)\\).*"
-      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t)
-      (1 compilation-info-face nil t)
-      (2 compilation-warning-face nil t))
+     ("^Sift[/a-zA-z]* finished.*"
+      (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t))
      ("^Sift[/a-zA-z]* \\(exited abnormally\\|interrupt\\|killed\\|terminated\\)\\(?:.*with code \\([0-9]+\\)\\)?.*"
       (0 '(face nil compilation-message nil help-echo nil mouse-face nil) t)
       (1 grep-error-face)

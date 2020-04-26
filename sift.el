@@ -54,7 +54,7 @@
 
 
 (defcustom sift-arguments
-  (list "-I")
+  (list)
   "Default arguments passed to sift."
   :type '(repeat (string))
   :group 'sift)
